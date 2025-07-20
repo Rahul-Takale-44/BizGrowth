@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Inbox - BizGrowth</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .inbox-section {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 90vh;
+      background: linear-gradient(135deg, #42A5F5, #0D47A1);
+      padding: 40px 20px;
+    }
+    .inbox-card {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(8px);
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      padding: 30px;
+      width: 90%;
+      max-width: 700px;
+      animation: fadeIn 0.5s ease-out;
+    }
+    .inbox-card h2 {
+      color: #0D47A1;
+      margin-bottom: 20px;
+      font-weight: 700;
+      text-align: center;
+    }
+    .message-item {
+      background: #fff;
+      border-radius: 10px;
+      padding: 15px;
+      margin: 10px 0;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .message-item p {
+      margin: 5px 0;
+      color: #333;
+    }
+    .message-item strong {
+      color: #0D47A1;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>BizGrowth</h1>
+    <nav>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="listings.html">Directory</a>
+      <a href="profile.html">My Profile</a>
+      <a href="inbox.html">Inbox</a>
+      <a href="index.html">Home</a>
+      <a href="login.html">Logout</a>
+    </nav>
+  </header>
+
+  <section class="inbox-section">
+    <div class="inbox-card">
+      <h2>Your Messages</h2>
+      <div id="messagesArea">
+        <p>Loading messages...</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 BizGrowth. All Rights Reserved.</p>
+  </footer>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
+
+  <script>
+    const db = firebase.firestore();
+    const messagesArea = document.getElementById("messagesArea");
+
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        db.collection("messages")
+          .where("recipientId", "==", user.uid)
+          .orderBy("timestamp", "desc")
+          .onSnapshot(snapshot => {
+            messagesArea.innerHTML = "";
+            if (snapshot.empty) {
+              messagesArea.innerHTML = "<p>No messages yet.</p>";
+            } else {
+              snapshot.forEach(doc => {
+                const msg = doc.data();
+                const messageItem = `
+                  <div class="message-item">
+                    <p><strong>From:</strong> ${msg.senderEmail}</p>
+                    <p><strong>Message:</strong> ${msg.message}</p>
+                    <p><em>${msg.timestamp?.toDate().toLocaleString() || ''}</em></p>
+                  </div>
+                `;
+                messagesArea.innerHTML += messageItem;
+              });
+            }
+          });
+      } else {
+        alert("Please log in to view your messages.");
+        window.location.href = "login.html";
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Business - BizGrowth</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #42A5F5, #0D47A1);
+      margin: 0;
+      padding: 0;
+    }
+    header, footer {
+      background-color: #0D47A1;
+      color: white;
+      text-align: center;
+      padding: 15px;
+    }
+    nav a {
+      margin: 0 10px;
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .business-section {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 80vh;
+      padding: 30px;
+    }
+    .business-card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+      padding: 25px;
+      max-width: 500px;
+      width: 100%;
+    }
+    .business-card h2 {
+      text-align: center;
+      color: #0D47A1;
+      margin-bottom: 20px;
+    }
+    .business-card input, .business-card textarea {
+      width: 100%;
+      margin: 8px 0;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+    .business-card button {
+      width: 100%;
+      padding: 12px;
+      background: #0D47A1;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .business-card button:hover {
+      background: #1565C0;
+    }
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #4CAF50;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 6px;
+      display: none;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>BizGrowth</h1>
+    <nav>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="directory.html">Directory</a>
+      <a href="logout.html">Logout</a>
+    </nav>
+  </header>
+
+  <section class="business-section">
+    <div class="business-card">
+      <h2>Manage Your Business Profile</h2>
+      <form id="businessForm">
+        <input type="text" id="businessName" placeholder="Business Name" required />
+        <input type="text" id="tagline" placeholder="Tagline" required />
+        <input type="text" id="industry" placeholder="Industry" required />
+        <input type="text" id="location" placeholder="Location" required />
+        <textarea id="services" rows="4" placeholder="Describe your services..." required></textarea>
+        <button type="submit">Save Profile</button>
+      </form>
+    </div>
+  </section>
+
+  <div class="toast" id="toast">✅ Profile updated successfully!</div>
+
+  <footer>
+    <p>© 2025 BizGrowth. Connect • Collaborate • Grow</p>
+  </footer>
+
+  <!-- Firebase SDKs -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBYv4vLw5ZA2zCB-u4xPbBWPXh0_BkIP3Y",
+      authDomain: "bizgrowth-6404b.firebaseapp.com",
+      projectId: "bizgrowth-6404b",
+      storageBucket: "bizgrowth-6404b.appspot.com",
+      messagingSenderId: "368977380521",
+      appId: "1:368977380521:web:8fb3670124b42f759615b8"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const toast = document.getElementById("toast");
+    const businessForm = document.getElementById("businessForm");
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.style.display = "block";
+      setTimeout(() => {
+        toast.style.display = "none";
+      }, 3000);
+    }
+
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const userRef = doc(db, "users", user.uid);
+        const userSnap = await getDoc(userRef);
+        if (userSnap.exists()) {
+          const data = userSnap.data();
+          document.getElementById("businessName").value = data.name || "";
+          document.getElementById("tagline").value = data.tagline || "";
+          document.getElementById("industry").value = data.industry || "";
+          document.getElementById("location").value = data.location || "";
+          document.getElementById("services").value = data.services || "";
+        }
+      } else {
+        alert("Please log in first.");
+        window.location.href = "login.html";
+      }
+    });
+
+    businessForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const name = document.getElementById("businessName").value;
+      const tagline = document.getElementById("tagline").value;
+      const industry = document.getElementById("industry").value;
+      const location = document.getElementById("location").value;
+      const services = document.getElementById("services").value;
+
+      const user = auth.currentUser;
+      if (user) {
+        try {
+          await setDoc(doc(db, "users", user.uid), {
+            name, tagline, industry, location, services, email: user.email
+          }, { merge: true });
+          showToast("✅ Profile updated successfully!");
+        } catch (error) {
+          console.error("Error saving profile:", error);
+          showToast("❌ Failed to save profile.");
+        }
+      }
+    });
+  </script>
+</body>
+</html>

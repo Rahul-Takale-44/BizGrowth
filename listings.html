@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Business Directory - BizGrowth</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #42A5F5, #0D47A1);
+      margin: 0;
+    }
+    header, footer {
+      background: #0D47A1;
+      color: white;
+      text-align: center;
+      padding: 10px;
+    }
+    nav a {
+      color: #fff;
+      margin: 0 8px;
+      text-decoration: none;
+    }
+    .directory-section {
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 10px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .business-card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      padding: 20px;
+      transition: transform 0.3s ease;
+    }
+    .business-card:hover {
+      transform: translateY(-5px);
+    }
+    .business-card h3 {
+      color: #0D47A1;
+      margin-bottom: 8px;
+    }
+    .business-card p {
+      margin: 4px 0;
+      color: #555;
+      font-size: 14px;
+    }
+    .view-btn {
+      margin-top: 10px;
+      background: #0D47A1;
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .view-btn:hover {
+      background: #1565C0;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>BizGrowth</h1>
+    <nav>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="listings.html">Directory</a>
+      <a href="mybusiness.html">My Business</a>
+      <a href="login.html">Logout</a>
+    </nav>
+  </header>
+
+  <section class="directory-section" id="directory">
+    <!-- Business cards will load here -->
+  </section>
+
+  <footer>
+    <p>© 2025 BizGrowth. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    const directory = document.getElementById("directory");
+
+    function loadDirectory() {
+      const profile = JSON.parse(localStorage.getItem("bizProfile"));
+
+      if (profile) {
+        const card = document.createElement("div");
+        card.classList.add("business-card");
+        card.innerHTML = `
+          <h3>${profile.name}</h3>
+          <p><strong>Tagline:</strong> ${profile.tagline}</p>
+          <p><strong>Industry:</strong> ${profile.industry}</p>
+          <p><strong>Location:</strong> ${profile.location}</p>
+          <p><strong>Services:</strong> ${profile.services}</p>
+          <button class="view-btn">View Profile</button>
+        `;
+        directory.appendChild(card);
+      } else {
+        directory.innerHTML = "<p style='color:white;text-align:center;'>No businesses found. Start by creating your profile in My Business.</p>";
+      }
+    }
+
+    window.onload = loadDirectory;
+  </script>
+</body>
+</html>

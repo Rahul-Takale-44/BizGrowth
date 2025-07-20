@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Analytics - BizGrowth</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .analytics-section {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 90vh;
+      background: linear-gradient(135deg, #42A5F5, #0D47A1);
+      padding: 40px 20px;
+    }
+    .analytics-card {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(8px);
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      padding: 30px;
+      width: 90%;
+      max-width: 700px;
+      animation: fadeIn 0.5s ease-out;
+      text-align: center;
+    }
+    .analytics-card h2 {
+      color: #0D47A1;
+      margin-bottom: 20px;
+      font-weight: 700;
+      font-size: 26px;
+    }
+    .analytics-card p {
+      color: #333;
+      margin: 10px 0;
+      font-size: 16px;
+    }
+    .industry-list {
+      margin-top: 20px;
+      text-align: left;
+    }
+    .industry-list li {
+      background: #fff;
+      border-radius: 8px;
+      padding: 10px;
+      margin: 5px 0;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+      list-style: none;
+      color: #0D47A1;
+      font-weight: 500;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>BizGrowth Analytics</h1>
+    <nav>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="admin.html">Admin Panel</a>
+      <a href="analytics.html">Analytics</a>
+      <a href="index.html">Home</a>
+      <a href="login.html">Logout</a>
+    </nav>
+  </header>
+
+  <section class="analytics-section">
+    <div class="analytics-card">
+      <h2>Platform Insights</h2>
+      <p id="totalUsers">👥 Total Users: Loading...</p>
+      <p id="totalMessages">💬 Total Messages: Loading...</p>
+      <h3 style="margin-top: 20px; color: #0D47A1;">Top Industries</h3>
+      <ul id="industryList" class="industry-list">
+        <li>Loading industries...</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 BizGrowth. All Rights Reserved. | Analytics Panel</p>
+  </footer>
+
+  <!-- Firebase Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBYv4vLw5ZA2zCB-u4xPbBWPXh0_BkIP3Y",
+      authDomain: "bizgrowth-6404b.firebaseapp.com",
+      projectId: "bizgrowth-6404b",
+      storageBucket: "bizgrowth-6404b.firebasestorage.app",
+      messagingSenderId: "368977380521",
+      appId: "1:368977380521:web:8fb3670124b42f759615b8"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // Total Users
+    db.collection("users").get().then(snapshot => {
+      const count = snapshot.size;
+      document.getElementById("totalUsers").innerText = `👥 Total Users: ${count}`;
+    });
+
+    // Total Messages
+    db.collection("messages").get().then(snapshot => {
+      const count = snapshot.size;
+      document.getElementById("totalMessages").innerText = `💬 Total Messages: ${count}`;
+    });
+
+    // Top Industries
+    db.collection("users").get().then(snapshot => {
+      const industryCounts = {};
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        const industry = data.industry || "Other";
+        industryCounts[industry] = (industryCounts[industry] || 0) + 1;
+      });
+
+      const sortedIndustries = Object.entries(industryCounts).sort((a, b) => b[1] - a[1]);
+
+      const industryList = document.getElementById("industryList");
+      industryList.innerHTML = "";
+      sortedIndustries.forEach(([industry, count]) => {
+        industryList.innerHTML += `<li>${industry}: ${count} user(s)</li>`;
+      });
+    });
+  </script>
+</body>
+</html>

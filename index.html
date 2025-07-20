@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BizGrowth - Connect. Collaborate. Grow.</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico.png">
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Enhanced Section Spacing & Scroll Effects */
+    .section {
+      padding: 100px 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+    .hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: linear-gradient(135deg, #42A5F5, #0D47A1);
+      color: #fff;
+    }
+    .hero h2 {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+    }
+    .hero p {
+      font-size: 1.5rem;
+      margin-bottom: 40px;
+      max-width: 700px;
+    }
+    .hero .cta {
+      padding: 15px 40px;
+      font-size: 1.2rem;
+    }
+    .features .card,
+    .testimonials .card {
+      margin: 20px;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      background: white;
+      transition: transform 0.3s ease;
+    }
+    .features .card:hover,
+    .testimonials .card:hover {
+      transform: translateY(-10px);
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+    .cta-section {
+      background: #0D47A1;
+      color: #fff;
+      text-align: center;
+      padding: 100px 20px;
+    }
+    .cta-section h2 {
+      font-size: 2.8rem;
+      margin-bottom: 30px;
+    }
+    .cta-section .cta {
+      padding: 15px 40px;
+      font-size: 1.2rem;
+      background: #FFCA28;
+      color: #0D47A1;
+      border-radius: 30px;
+      text-decoration: none;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+    .cta-section .cta:hover {
+      background: #FFC107;
+      transform: scale(1.05);
+    }
+    footer {
+      text-align: center;
+      padding: 30px;
+      background-color: #E0E0E0;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>BizGrowth</h1>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#features">Features</a>
+      <a href="#testimonials">Testimonials</a>
+
+      <a href="login.html">Login</a>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h2>Connect. Collaborate. Grow.</h2>
+    <p>Join the BizGrowth network and scale your business with marketing, sales, and HR tools—all in one place.</p>
+    <a href="signup.html" class="cta">Get Started for Free</a>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="section fade-in">
+  <h2>About BizGrowth</h2>
+  <div style="display: flex; align-items: center; justify-content: center; gap: 30px; flex-wrap: wrap;">
+    <img src="download.png" alt="" style="max-width: 300px; border-radius: 10px;">
+    <p style="flex: 1; min-width: 250px;">
+      BizGrowth is your all-in-one business accelerator. From marketing and sales to HR management, we help startups and enterprises thrive in today’s competitive landscape.
+    </p>
+  </div>
+</section>
+
+
+  <!-- Features Section -->
+  <section id="features" class="section features fade-in">
+    <h2>Our Features</h2>
+    <div class="features-grid">
+      <div class="card">
+        <h3>Marketing Tools</h3>
+        <p>Attract, engage, and retain customers with powerful marketing solutions.</p>
+      </div>
+      <div class="card">
+        <h3>Sales Analytics</h3>
+        <p>Gain insights and close deals faster with smart sales analytics.</p>
+      </div>
+      <div class="card">
+        <h3>HR Automation</h3>
+        <p>Simplify HR processes with intuitive automation tools.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section id="testimonials" class="section testimonials fade-in">
+    <h2>What Our Users Say </h2>
+    <div class="features-grid">
+      <div class="card">
+        <p>"BizGrowth helped us scale our business 2x in just 6 months!"</p>
+        <h4>- Rahul Takale.</h4>
+      </div>
+      <div class="card">
+        <p>"A must-have platform for any growing company."</p>
+        <br>
+        <h4>- Shivani Takale.</h4>
+      </div>
+      <div class="card">
+        <p>"Platforms like BizGrowth really help business grow as we experienced in just 1 week.."</p>
+        <h4>- Deepesh Patil.</h4>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="cta-section fade-in">
+    <h2>Ready to Grow Your Business?</h2>
+    <a href="signup.html" class="cta">Join BizGrowth Now</a>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 BizGrowth. All Rights Reserved. | Connect • Collaborate • Grow</p>
+  </footer>
+
+  <script>
+    // Scroll animation trigger
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(section => {
+      observer.observe(section);
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Profile - BizGrowth</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+  <h1>BizGrowth</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="listings.html">Directory</a>
+    <a href="profile.html">My Profile</a>
+    <a href="contact.html">Contact</a>
+    <a href="login.html">Logout</a>
+  </nav>
+</header>
+
+
+  <section class="profile-box" id="profileBox">
+  <h2>Loading...</h2>
+</section>
+
+  <footer>
+  <p>© 2025 BizGrowth. All Rights Reserved. | Connect • Collaborate • Grow</p>
+</footer>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
+
+<script>
+  const db = firebase.firestore();
+
+  auth.onAuthStateChanged(function(user) {
+    if (user) {
+      const uid = user.uid;
+      db.collection("users").doc(uid).get().then((doc) => {
+        if (doc.exists) {
+          const data = doc.data();
+          const profileBox = document.getElementById("profileBox");
+          profileBox.innerHTML = `
+            <img src="assets/profile.jpg" class="profile-pic" />
+            <h2>${data.name}</h2>
+            <p><strong>Owner:</strong> ${data.owner}</p>
+            <p><strong>Industry:</strong> ${data.industry}</p>
+            <p><strong>Email:</strong> ${data.email}</p>
+            <p><strong>Location:</strong> ${data.location}</p>
+            <button>Send Message</button>
+          `;
+        } else {
+          alert("Profile not found.");
+        }
+      });
+    } else {
+      window.location.href = "login.html";
+    }
+  });
+</script>
+
+</body>
+</html>

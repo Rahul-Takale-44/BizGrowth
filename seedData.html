@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Seed BizGrowth Data</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #2196f3, #0d47a1);
+      color: white;
+      text-align: center;
+      padding: 40px;
+    }
+    button {
+      padding: 12px 25px;
+      font-size: 16px;
+      border: none;
+      background: #fff;
+      color: #0d47a1;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    #log {
+      margin-top: 30px;
+      background: rgba(255,255,255,0.1);
+      padding: 15px;
+      border-radius: 8px;
+      text-align: left;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>Seed Dummy Data into BizGrowth</h1>
+  <p>This will insert businesses, messages, and contact entries into Firestore.</p>
+  <button onclick="seedData()">Start Seeding</button>
+  <div id="log"></div>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBYv4vLw5ZA2zCB-u4xPbBWPXh0_BkIP3Y",
+      authDomain: "bizgrowth-6404b.firebaseapp.com",
+      projectId: "bizgrowth-6404b",
+      storageBucket: "bizgrowth-6404b.appspot.com",
+      messagingSenderId: "368977380521",
+      appId: "1:368977380521:web:8fb3670124b42f759615b8",
+      measurementId: "G-CRMBMH56T8"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    function log(msg) {
+      document.getElementById('log').innerText += msg + "\n";
+    }
+
+    function seedData() {
+      const users = [
+        { name: "Rahul Industries", owner: "Rahul Takale", industry: "IT Services", location: "Pune", tagline: "Transforming Ideas to Reality", services: "Web Dev, Mobile Apps, Cloud", email: "rahul@bizgrowth.com" },
+        { name: "Takale Foods", owner: "Rohan Takale", industry: "Food & Beverages", location: "Mumbai", tagline: "Taste That Delights", services: "Catering, Snacks, Organic Food", email: "rohan@bizgrowth.com" }
+      ];
+      const messages = [
+        { senderEmail: "rahul@bizgrowth.com", recipientName: "Takale Foods", message: "We are interested in your organic supply.", recipientId: "dummy1", timestamp: new Date() },
+        { senderEmail: "rohan@bizgrowth.com", recipientName: "Rahul Industries", message: "Need software automation help.", recipientId: "dummy2", timestamp: new Date() }
+      ];
+      const contacts = [
+        { name: "Sneha Rao", email: "sneha@example.com", message: "Do you provide HR support?", timestamp: new Date() },
+        { name: "Manoj Kumar", email: "manoj@example.com", message: "How to list business?", timestamp: new Date() }
+      ];
+
+      users.forEach(u => {
+        db.collection("users").add(u).then(() => log("✅ User: " + u.name)).catch(err => log("❌ User Error: " + err));
+      });
+
+      messages.forEach(m => {
+        db.collection("messages").add(m).then(() => log("✅ Message: " + m.senderEmail)).catch(err => log("❌ Message Error: " + err));
+      });
+
+      contacts.forEach(c => {
+        db.collection("contacts").add(c).then(() => log("✅ Contact: " + c.name)).catch(err => log("❌ Contact Error: " + err));
+      });
+
+      log("🎉 Seeding initiated!");
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard - BizGrowth</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f8fb;
+      color: #333;
+    }
+    header {
+      background: linear-gradient(135deg, #42A5F5, #0D47A1);
+      color: white;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+    nav a {
+      color: white;
+      margin: 0 10px;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .section {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 20px;
+      border-bottom: 1px solid #e0e0e0;
+      background-color: #fff;
+    }
+    .section:nth-child(even) {
+      background-color: #f0f7ff;
+    }
+    .section img {
+      max-width: 500px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      margin: 20px;
+    }
+    .content {
+      max-width: 500px;
+      margin: 20px;
+    }
+    .content h2 {
+      color: #0D47A1;
+      margin-bottom: 15px;
+    }
+    .content p {
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+    .btn {
+      display: inline-block;
+      background-color: #0D47A1;
+      color: #fff;
+      padding: 12px 25px;
+      border-radius: 30px;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+    .btn:hover {
+      background-color: #1565C0;
+    }
+    footer {
+      text-align: center;
+      padding: 15px;
+      background: linear-gradient(135deg, #42A5F5, #0D47A1);
+      color: white;
+      margin-top: 30px;
+    }
+
+    @media (max-width: 768px) {
+      .section {
+        flex-direction: column;
+      }
+      .section img {
+        max-width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>BizGrowth</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="listings.html">Directory</a>
+      <a href="mybusiness.html">My Business</a>
+      <a href="contact.html">Contact</a>
+      <a href="login.html">Logout</a>
+    </nav>
+  </header>
+
+  <!-- Marketing Tools Section -->
+  <div class="section">
+    <img src="https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="Marketing Tools">
+    <div class="content">
+      <h2>📈 Marketing Tools</h2>
+      <p>Boost your business visibility and reach your target audience using smart marketing features tailored for startups and enterprises.</p>
+      <a href="marketing.html" class="btn">Manage Marketing</a>
+    </div>
+  </div>
+
+  <!-- Sales Boosters Section -->
+  <div class="section">
+    <div class="content">
+      <h2>🤝 Sales Boosters</h2>
+      <p>Accelerate your sales with advanced tools for lead management, customer engagement, and automated follow-ups.</p>
+      <a href="sales.html" class="btn">Manage Sales</a>
+    </div>
+    <img src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="Sales Boosters">
+  </div>
+
+  <!-- Smart HR Support Section -->
+  <div class="section">
+    <img src="https://images.pexels.com/photos/3184301/pexels-photo-3184301.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="HR Support">
+    <div class="content">
+      <h2>👥 Smart HR Support</h2>
+      <p>Efficient HR solutions for hiring, managing, and retaining the best talent to grow your business.</p>
+      <a href="hr.html" class="btn">Manage HR</a>
+    </div>
+  </div>
+
+  <!-- Manage My Business Section -->
+  <div class="section">
+    <div class="content">
+      <h2>📦 Manage My Business</h2>
+      <p>Edit your business profile, keep it updated, and prepare for directory listing so others can find and connect with you.</p>
+      <a href="mybusiness.html" class="btn">Go to My Business</a>
+    </div>
+    <img src="https://images.pexels.com/photos/3182763/pexels-photo-3182763.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="Manage Business">
+  </div>
+
+  <!-- Explore Directory Section -->
+  <div class="section">
+    <img src="https://images.pexels.com/photos/3184302/pexels-photo-3184302.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="Explore Directory">
+    <div class="content">
+      <h2>🔍 Explore Directory</h2>
+      <p>Find and connect with other businesses in your industry and create strong B2B networks for collaboration and growth.</p>
+      <a href="listings.html" class="btn">Go to Directory</a>
+    </div>
+  </div>
+
+  <footer>
+    © 2025 BizGrowth. Connect • Collaborate • Grow
+  </footer>
+</body>
+</html>

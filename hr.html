@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart HR Support - BizGrowth</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f0f8ff;
+      color: #333;
+    }
+    header {
+      background: linear-gradient(135deg, #42A5F5, #0D47A1);
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .section {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    }
+    .section h2, .section h3 {
+      color: #0D47A1;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .section p {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #555;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+    input, textarea, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 8px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+    button {
+      background-color: #0D47A1;
+      color: white;
+      cursor: pointer;
+      border: none;
+    }
+    button:hover {
+      background-color: #1565C0;
+    }
+
+    .analytics-img {
+      width: 100%;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+    th, td {
+      padding: 12px;
+      text-align: center;
+      border: 1px solid #ddd;
+    }
+    th {
+      background-color: #0D47A1;
+      color: white;
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      background: #0D47A1;
+      color: white;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>BizGrowth</h1>
+    <nav>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="marketing.html">Marketing</a>
+      <a href="sales.html">Sales</a>
+      <a href="hr.html">HR</a>
+      <a href="mybusiness.html">My Business</a>
+      <a href="directory.html">Directory</a>
+      <a href="login.html">Logout</a>
+    </nav>
+  </header>
+
+  <div class="section">
+    <h2>👥 Smart HR Support</h2>
+    <p>Efficient HR solutions for hiring, onboarding & managing your team.</p>
+  </div>
+
+  <div class="section">
+    <h3>➕ Add New Employee</h3>
+    <p>Enter details to add a new team member:</p>
+    <form>
+      <div class="form-group">
+        <input type="text" placeholder="Employee Name" required>
+      </div>
+      <div class="form-group">
+        <input type="text" placeholder="Designation" required>
+      </div>
+      <div class="form-group">
+        <input type="email" placeholder="Email" required>
+      </div>
+      <div class="form-group">
+        <textarea placeholder="Notes about the employee..." rows="4"></textarea>
+      </div>
+      <button type="submit">Add Employee</button>
+    </form>
+  </div>
+
+  <div class="section">
+    <h3>📋 Employee Directory</h3>
+    <p>View and manage your current team:</p>
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Designation</th>
+        <th>Email</th>
+        <th>Actions</th>
+      </tr>
+      <tr>
+        <td>Rahul Sharma</td>
+        <td>Software Engineer</td>
+        <td>rahul@example.com</td>
+        <td><button>View</button></td>
+      </tr>
+      <tr>
+        <td>Sneha Patil</td>
+        <td>HR Manager</td>
+        <td>sneha@example.com</td>
+        <td><button>Edit</button></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h3>📊 HR Analytics</h3>
+    <p>Insights into team performance and HR metrics (Coming Soon)</p>
+    <img class="analytics-img" src="https://images.unsplash.com/photo-1581093588401-3c93a5d1ea02?auto=format&fit=crop&w=800&q=60" alt="HR Analytics Image">
+  </div>
+
+  <footer>
+    © 2025 BizGrowth. Connect • Collaborate • Grow
+  </footer>
+</body>
+</html>
