@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Marketing Tools - BizGrowth</title>
   <link rel="stylesheet" href="style.css" />
@@ -31,7 +32,6 @@
     nav a:hover {
       text-decoration: underline;
     }
-
     .section {
       max-width: 900px;
       margin: 30px auto;
@@ -50,7 +50,6 @@
       margin-bottom: 20px;
       color: #555;
     }
-
     .form-group {
       margin-bottom: 15px;
     }
@@ -71,13 +70,6 @@
     button:hover {
       background-color: #1565C0;
     }
-
-    .analytics-img {
-      width: 100%;
-      border-radius: 8px;
-      margin-top: 10px;
-    }
-
     table {
       width: 100%;
       border-collapse: collapse;
@@ -92,7 +84,6 @@
       background-color: #0D47A1;
       color: white;
     }
-
     footer {
       text-align: center;
       padding: 15px;
@@ -124,47 +115,105 @@
   <div class="section">
     <h3>🎯 Create New Campaign</h3>
     <p>Set up your next big marketing campaign:</p>
-    <form>
+    <form id="campaignForm">
       <div class="form-group">
-        <input type="text" placeholder="Campaign Name" required>
+        <input type="text" id="campaignName" placeholder="Campaign Name" required>
       </div>
       <div class="form-group">
-        <textarea placeholder="Campaign Description" rows="4" required></textarea>
+        <textarea id="campaignDesc" placeholder="Campaign Description" rows="4" required></textarea>
       </div>
       <button type="submit">Create Campaign</button>
     </form>
   </div>
 
   <div class="section">
-    <h3>📊 Campaign Analytics</h3>
-    <p>Track how your campaigns are performing (Coming Soon)</p>
-    <img class="analytics-img" src="https://images.unsplash.com/photo-1562577309-2592ab84b1bc?auto=format&fit=crop&w=800&q=60" alt="Analytics Image">
-  </div>
-
-  <div class="section">
     <h3>📂 Manage Existing Campaigns</h3>
     <p>View and manage all your active campaigns:</p>
     <table>
-      <tr>
-        <th>Campaign</th>
-        <th>Status</th>
-        <th>Actions</th>
-      </tr>
-      <tr>
-        <td>Summer Sale 2025</td>
-        <td>Active</td>
-        <td><button>View</button></td>
-      </tr>
-      <tr>
-        <td>Winter Promo 2025</td>
-        <td>Draft</td>
-        <td><button>Edit</button></td>
-      </tr>
+      <thead>
+        <tr>
+          <th>Campaign</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="campaignTable">
+        <!-- Campaigns will be populated here -->
+      </tbody>
     </table>
   </div>
 
   <footer>
     © 2025 BizGrowth. Connect • Collaborate • Grow
   </footer>
+
+  <!-- Modular Firebase -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBYv4vLw5ZA2zCB-u4xPbBWPXh0_BkIP3Y",
+      authDomain: "bizgrowth-6404b.firebaseapp.com",
+      projectId: "bizgrowth-6404b",
+      storageBucket: "bizgrowth-6404b.appspot.com",
+      messagingSenderId: "368977380521",
+      appId: "1:368977380521:web:8fb3670124b42f759615b8"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    async function loadCampaigns(userId) {
+      const tbody = document.getElementById("campaignTable");
+      tbody.innerHTML = "";
+      const querySnapshot = await getDocs(collection(db, "users", userId, "campaigns"));
+      querySnapshot.forEach((docSnap) => {
+        const data = docSnap.data();
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${data.campaignName}</td>
+          <td>${data.status}</td>
+          <td><button onclick="deleteCampaign('${userId}', '${docSnap.id}')">Delete</button></td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    window.deleteCampaign = async function(userId, campaignId) {
+      await deleteDoc(doc(db, "users", userId, "campaigns", campaignId));
+      alert("🗑️ Campaign deleted.");
+      loadCampaigns(userId);
+    };
+
+    document.getElementById("campaignForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const user = auth.currentUser;
+      if (!user) {
+        alert("Please log in first.");
+        return;
+      }
+      const name = document.getElementById("campaignName").value;
+      const desc = document.getElementById("campaignDesc").value;
+
+      await addDoc(collection(db, "users", user.uid, "campaigns"), {
+        campaignName: name,
+        campaignDescription: desc,
+        status: "Active",
+        createdAt: new Date()
+      });
+      alert("🎉 Campaign Created!");
+      document.getElementById("campaignForm").reset();
+      loadCampaigns(user.uid);
+    });
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        loadCampaigns(user.uid);
+      }
+    });
+  </script>
 </body>
 </html>
